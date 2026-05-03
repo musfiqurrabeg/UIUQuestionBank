@@ -94,10 +94,10 @@ function loadQuestion(courses) {
     document.getElementById("downloadPDF").href = pdfUrl;
 
     document.getElementById("downloadLink").innerHTML = `
-            <a href="${pdfUrl}" download="${Course.title + " - " + termName + " - " + trimesterName}.pdf">
-                <div class="tool rippleButtonBlack">
-                    <div class="icon"><i class="fas fa-file-pdf"></i></div>
-                    <div class="name">Download PDF</div>
+            <a href="${pdfUrl}" download="${Course.title + " - " + termName + " - " + trimesterName}.pdf" style="text-decoration: none;">
+                <div class="tool" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: var(--text-primary); cursor: pointer; border-radius: var(--r-sm); transition: 0.2s;">
+                    <div class="icon"><i class="fas fa-file-pdf" style="color: #e2574c; font-size: 18px;"></i></div>
+                    <div class="name" style="font-weight: var(--fw-semibold); font-size: var(--text-sm);">Download PDF</div>
                 </div>
             </a>
     ` ;
@@ -105,7 +105,7 @@ function loadQuestion(courses) {
 
 var randomVersion = Math.floor(Math.random() * 10 ** 15);
 async function loadCourseData() {
-    const response = await fetch("js/data.json?" + randomVersion);
+    const response = await fetch("data/data.json?" + randomVersion);
     const courses = await response.json();
     loadQuestion(await courses);
 }

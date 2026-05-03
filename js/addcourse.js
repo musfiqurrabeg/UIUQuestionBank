@@ -20,12 +20,18 @@ function fillUpCourseBoxContainer(courses) {
         courses.forEach(function(course) {
             document.getElementById("courseBoxContainer").innerHTML += 
             `
-            <a onclick="addCourse('${course.id}')">            
-                <div class="courseBox rippleButton" style="background-image: ${course.css}">
-                    <div class="text">
-                        <div class="title">${course.title}</div>
-                        <div class="semiTitle">${course.code}</div>
+            <a onclick="addCourse('${course.id}')" class="course-card">            
+                <div class="course-card-thumb" style="background: ${course.css}">
+                    <div class="badge">UIU Course</div>
+                </div>
+                <div class="course-card-body">
+                    <h3 class="course-card-title">${course.title}</h3>
+                    <div class="course-card-author"><i class="fas fa-chalkboard-teacher"></i> ${course.code}</div>
+                    <div class="course-card-meta">
+                        <span><i class="far fa-clock"></i> 14 Weeks</span>
+                        <span><i class="fas fa-layer-group"></i> ${course.abbr || "BSc"}</span>
                     </div>
+                    <div class="course-card-btn">Add to Bookmarks <i class="fas fa-plus" style="margin-left: 4px; font-size: 12px;"></i></div>
                 </div>
             </a>
             `;
@@ -35,7 +41,7 @@ function fillUpCourseBoxContainer(courses) {
 
 var randomVersion = Math.floor(Math.random()*10**15);
 async function loadCourseData() {
-    const response = await fetch("js/data.json?"+randomVersion);
+    const response = await fetch("data/data.json?"+randomVersion);
     const courses = await response.json();
     Courses = await courses;
     fillUpCourseBoxContainer(await courses);

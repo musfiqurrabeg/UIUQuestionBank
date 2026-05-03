@@ -14,12 +14,9 @@ function loadQuestions(courses) {
     
     Course = Courses[0];
     termName = getTerm == "mid" ? "Mid-Term" : "Final";
-    document.getElementById("mainTitle").innerHTML = termName+" Questions";
-    document.getElementById("titleDiv").innerHTML = Course.code;
-    document.getElementById("semiTitleDiv").innerHTML = Course.title;
-    document.getElementById("courseInfoBox").style.backgroundImage = Course.css;
-    document.getElementById("courseTitle").innerHTML = Course.title;
-    document.getElementById("courseCode").innerHTML = Course.code;
+    document.getElementById("courseTitle").innerHTML = termName + " Questions";
+    document.getElementById("courseCode").innerHTML = Course.title;
+    document.getElementById("menuBarDiv").style.background = Course.css || "var(--brand)";
     
     if(Course[getTerm].length == 0) {
         document.getElementById("questionBoxContainer").innerHTML += 
@@ -65,20 +62,14 @@ function loadQuestions(courses) {
 
 var randomVersion = Math.floor(Math.random()*10**15);
 async function loadCourseData() {
-    const response = await fetch("js/data.json?"+randomVersion);
+    const response = await fetch("data/data.json?"+randomVersion);
     const courses = await response.json();
     loadQuestions(await courses);
 }
 
 loadCourseData();
 
-document.getElementById("openToolMenu").onclick = function() {
-    document.getElementById("toolMenu").style.display = "block";
-}
 
-document.getElementById("toolMenu").onclick = function() {
-    document.getElementById("toolMenu").style.display = "none";
-}
 
 
 function GenerateZIP() {

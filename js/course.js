@@ -11,31 +11,27 @@ function loadQuestionBox(courses) {
     
     Course = Courses[0];
     
-    document.getElementById("titleDiv").innerHTML = Course.code;
-    document.getElementById("semiTitleDiv").innerHTML = Course.title;
-    document.getElementById("courseInfoBox").style.backgroundImage = Course.css;
-    document.getElementById("iconOne").style.backgroundImage = Course.css;
-    document.getElementById("iconTwo").style.backgroundImage = Course.css;
-    document.getElementById("iconThree").style.backgroundImage = Course.css;
-    document.getElementById("iconFour").style.backgroundImage = Course.css;
+    document.getElementById("menuBarDiv").style.background = Course.css;
     document.getElementById("courseTitle").innerHTML = Course.title;
     document.getElementById("courseCode").innerHTML = Course.code;
-    document.getElementById("mid").setAttribute("href", `questions.html?term=mid&id=${Course.id}`);
-    document.getElementById("final").setAttribute("href", `questions.html?term=final&id=${Course.id}`);
     
-    if(Course.midSolve != "null") {
-        document.getElementById("disableMid").remove();
-        document.getElementById("midSolve").setAttribute("href", `question.html?id=${Course.id}&term=mid&tri=solve`);
-    }
-    if(Course.finalSolve != "null") {
-        document.getElementById("disableFinal").remove();
-        document.getElementById("finalSolve").setAttribute("href", `question.html?id=${Course.id}&term=final&tri=solve`);
-    }
+    document.getElementById("midterm").onclick = function() {
+        window.location.href = `questions.html?term=mid&id=${Course.id}`;
+    };
+    document.getElementById("final").onclick = function() {
+        window.location.href = `questions.html?term=final&id=${Course.id}`;
+    };
+    document.getElementById("ct").onclick = function() {
+        showToast("Class Test questions will be available soon!");
+    };
+    document.getElementById("others").onclick = function() {
+        showToast("Other materials will be available soon!");
+    };
 }
 
 var randomVersion = Math.floor(Math.random()*10**15);
 async function loadCourseData() {
-    const response = await fetch("js/data.json?"+randomVersion);
+    const response = await fetch("data/data.json?"+randomVersion);
     const courses = await response.json();
     loadQuestionBox(await courses);
 }
@@ -76,11 +72,4 @@ function showToast(string) {
         x.innerHTML = string;
         setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
     }
-}
-
-document.getElementById("disableMid").onclick = function() {
-    showToast("Sorry, Mid-Term Solution of this course is still not completed!");
-}
-document.getElementById("disableFinal").onclick = function() {
-    showToast("Sorry, Final Solution of this course is still not completed!");
 }

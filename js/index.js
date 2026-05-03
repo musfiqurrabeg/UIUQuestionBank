@@ -7,13 +7,7 @@ window.addEventListener("pageshow", function ( event ) {
     }
 });
 
-if(!navigator.onLine) {
-    document.getElementById("noConnectionBoxBackground").style.display = "block";
-}
 
-document.getElementById("reloadApp").onclick = function() {
-    location.reload();
-}
 
 if(localStorage.getItem("isBookmarkedCourseAdded") == null) {
     localStorage.setItem("bookmarkedCourse", "MATH1151,CSE1115,CSE1325");
@@ -49,12 +43,18 @@ function fillUpCourseBoxContainer(courses, length) {
             course = courses[i];
             document.getElementById("courseBoxContainer").innerHTML += 
             `
-            <a href="course.html?id=${course.id}">            
-                <div class="courseBox rippleButton" style="background: ${course.css}">
-                    <div class="text">
-                        <div class="title">${course.title}</div>
-                        <div class="semiTitle">${course.code}</div>
+            <a href="course.html?id=${course.id}" class="course-card">            
+                <div class="course-card-thumb" style="background: ${course.css}">
+                    <div class="badge">UIU Course</div>
+                </div>
+                <div class="course-card-body">
+                    <h3 class="course-card-title">${course.title}</h3>
+                    <div class="course-card-author"><i class="fas fa-chalkboard-teacher"></i> ${course.code}</div>
+                    <div class="course-card-meta">
+                        <span><i class="far fa-clock"></i> 14 Weeks</span>
+                        <span><i class="fas fa-layer-group"></i> ${course.abbr || "BSc"}</span>
                     </div>
+                    <div class="course-card-btn">Enroll <i class="fas fa-arrow-right" style="margin-left: 4px; font-size: 12px;"></i></div>
                 </div>
             </a>
             `;
@@ -62,26 +62,17 @@ function fillUpCourseBoxContainer(courses, length) {
     }
 }
 
-bookmarkedCourseData = localStorage.getItem("bookmarkedCourse");
-bookmarkedCourse = [];
+var randomCoursesForTop = [];
 
 function setBookmark(courses) {
-    if(bookmarkedCourseData != ""){
-        bookmarkedCourseData = bookmarkedCourseData.split(",");
-        bookmarkedCourseData.forEach(function(code) {
-            matchedCourse = courses.filter(function(el) {
-                return el.id.includes(code);
-            });
-            bookmarkedCourse.push(matchedCourse[0]);
-        });
-    }
-
-    fillUpCourseBoxContainer(bookmarkedCourse, bookmarkedCourse.length);
+    var shuffled = [...courses].sort(() => 0.5 - Math.random());
+    randomCoursesForTop = shuffled.slice(0, 8);
+    fillUpCourseBoxContainer(randomCoursesForTop, randomCoursesForTop.length);
 }
 
 var randomVersion = Math.floor(Math.random()*10**15);
 async function loadCourseData() {
-    const response = await fetch("js/data.json?"+randomVersion);
+    const response = await fetch("data/data.json?"+randomVersion);
     const courses = await response.json();
     Courses = await courses;
     setBookmark(await courses);
@@ -92,7 +83,7 @@ document.getElementById("searchCourse").oninput = function(e) {
     var searchValue = e.target.value;
     
     if(searchValue == "" || searchValue == " ") {
-        fillUpCourseBoxContainer(bookmarkedCourse, bookmarkedCourse.length);
+        fillUpCourseBoxContainer(randomCoursesForTop, randomCoursesForTop.length);
     }
     else {
         searchCourses = Courses.filter(function(el) {
@@ -104,66 +95,15 @@ document.getElementById("searchCourse").oninput = function(e) {
 
 document.getElementById("openMenu").onclick = function() {
     document.getElementById("sidebarMenuBackground").style.display = "block";
-    document.getElementById("sidebarMenu").style.left = "0px";
+    document.getElementById("sidebar").style.left = "0px";
 }
 
 document.getElementById("sidebarMenuBackground").onclick = function() {
     document.getElementById("sidebarMenuBackground").style.display = "none";
-    document.getElementById("sidebarMenu").style.left = "-300px";
+    document.getElementById("sidebar").style.left = "-300px";
 }
 
-document.getElementById("openAboutBox").onclick = function() {
-    document.getElementById("sidebarMenuBackground").style.display = "none";
-    document.getElementById("sidebarMenu").style.left = "-300px";
-    document.getElementById("aboutBoxBackground").style.display = "block";
-}
-document.getElementById("closeAboutBox").onclick = function() {
-    document.getElementById("aboutBoxBackground").style.display = "none";
-}
 
-document.getElementById("openAcknowledgmentBox").onclick = function() {
-    document.getElementById("sidebarMenuBackground").style.display = "none";
-    document.getElementById("sidebarMenu").style.left = "-300px";
-    document.getElementById("acknowledgmentBoxBackground").style.display = "block";
-}
-document.getElementById("closeAcknowledgmentBox").onclick = function() {
-    document.getElementById("acknowledgmentBoxBackground").style.display = "none";
-}
-
-document.getElementById("openTrimesterBox").onclick = function() {
-    document.getElementById("sidebarMenuBackground").style.display = "none";
-    document.getElementById("sidebarMenu").style.left = "-300px";
-    document.getElementById("trimesterBoxBackground").style.display = "block";
-}
-document.getElementById("selectTrimester").onclick = function() {
-    document.getElementById("trimesterBoxBackground").style.display = "none";
-}
-document.getElementById("selectTrimester").onclick = function() {
-    let newBookmarkedCourseData = [];
-    var newTrimester = document.getElementById("trimesterList").value;
-    let matchedCourses = Courses.filter(function(el) {
-        return el.trimester == newTrimester;
-    });
-    matchedCourses.forEach(function(course) { 
-        newBookmarkedCourseData.push(course.id);
-    });
-
-   localStorage.setItem("bookmarkedCourse", newBookmarkedCourseData.toString());
-   location.reload();
-}
-
-function exitApp() {
-    document.getElementById("sidebarMenuBackground").style.display = "none";
-    document.getElementById("sidebarMenu").style.left = "-300px";
-    document.getElementById("exitBoxBackground").style.display = "block";
-}
-document.getElementById("closeExitBox").onclick = function() {
-    document.getElementById("exitBoxBackground").style.display = "none";
-}
-document.getElementById("exitApp").onclick = function() {
-    document.getElementById("exitBoxBackground").style.display = "none";
-    console.log("Exit App")
-}
 
 
 $("html").on("pointerdown", ".rippleButton, .rippleButtonBlack", function(evt) {
@@ -183,24 +123,4 @@ $("html").on("pointerup", ".rippleButton, .rippleButtonBlack", function(evt) {
 });
 
 
-fetch("js/ayat.json?new")
-.then(res => res.json())
-.then(function (res) {
-    var randomInteger = Math.floor(Math.random() * 100);
-    var randomAyat = randomInteger%8;
-    document.getElementById("ayatBoxHere").innerHTML = `
-    <div class="ayatBox">
-        <div class="arabicAyat">${res[randomAyat].ayatAR}</div>
-        <div class="ayatTranslation">
-            <div class="englishAyat">${res[randomAyat].ayatEN}</div>
-            <div class="englishAyat">${res[randomAyat].ayatBN}</div>
-            <div class="surahName">
-                <div class="title">${res[randomAyat].surah}</div>
-                <div class="semiTitle">Ayat ${res[randomAyat].ayatNo}</div>
-            </div> 
-        </div>
-    </div>
-    `;
-})
-.catch(function() {
-});
+
