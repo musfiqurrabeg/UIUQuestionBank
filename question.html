@@ -4,32 +4,74 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>UIU Question Bank</title>
+    <title>PDF Viewer - UIU Question Bank</title>
     <link href="css/all.css" rel="stylesheet">
-    <link href="css/style.css?WebViewer" rel="stylesheet">
+    <link href="css/style.css?v=lms" rel="stylesheet">
     <script src="js/jquery.min.js"></script>
     <script src="WebViewer/lib/webviewer.min.js"></script>
+    <style>
+        .pdf-viewer-layout {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+            background: var(--bg);
+        }
+        .pdf-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+        }
+        .pdf-header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        #viewer {
+            flex: 1;
+            width: 100%;
+        }
+        .pdf-header .title {
+            font-size: var(--text-lg);
+            font-weight: var(--fw-bold);
+            color: var(--text-primary);
+        }
+        .pdf-header .semiTitle {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+        }
+    </style>
 </head>
-<body class="questionBody">
-    <div class="menuBar" id="menuBarDiv">
-        <a id="back"><div class="icon rippleButton">
-            <i class="fas fa-arrow-left"></i>
-        </div></a>
-        <div class="text">
-            <div class="title" id="titleDiv"></div>
-            <div class="semiTitle" id="semiTitleDiv"></div>
+<body>
+    <div class="pdf-viewer-layout">
+        <div class="pdf-header">
+            <div class="pdf-header-left">
+                <button class="btn-see-all" id="back" style="background: var(--bg); border: 1px solid var(--border);"><i class="fas fa-arrow-left"></i></button>
+                <div>
+                    <div class="title" id="titleDiv">Loading...</div>
+                    <div class="semiTitle" id="semiTitleDiv">Loading...</div>
+                </div>
+            </div>
+            <div class="pdf-header-right">
+                <button class="btn-see-all" id="openToolMenu" style="background: var(--brand); color: white; border: none; padding: 10px 16px;"><i class="fas fa-download"></i> Options</button>
+            </div>
         </div>
-        <div class="icon rippleButton" id="openToolMenu">
-            <i class="fas fa-ellipsis-v"></i>
-        </div>
+
+        <div id="viewer"></div>
     </div>
-    <div class="toolMenu" id="toolMenu">
-        <div class="tools">
+
+    <!-- Dropdown Tool Menu -->
+    <div class="toolMenu" id="toolMenu" style="display: none; position: absolute; right: 24px; top: 70px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-sm); z-index: 100; box-shadow: var(--shadow-lg);">
+        <div class="tools" style="padding: 8px;">
             <span id="downloadLink">
-                
+                <!-- Injected Download Button -->
             </span>
         </div>
     </div>
+
     <div class="dialogBoxBackground" id="errorBoxBackground">
         <div class="dialogBox">
             <div class="title">Unexpected Error</div>
@@ -42,17 +84,7 @@
             </div>
         </div>
     </div>
-    <!-- <div id="loading">
-        <div class="loadingContent">
-            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            <div class="text">
-                <div class="title">Loading Document</div>
-                <div class="semiTitle">Please Wait...</div>
-            </div>
-        </div>
-    </div> -->
-    <div id="viewer"></div>
-    <!-- <script src="https://acrobatservices.adobe.com/view-sdk/viewer.js"></script> -->
-    <script src="js/question.js?PDFJSExpressByApryse"></script>
+
+    <script src="js/question.js?v=lms"></script>
 </body>
 </html>

@@ -2,69 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>UIU Question Bank</title>
+    <title>Questions - UIU Question Bank</title>
     <link href="css/all.css" rel="stylesheet">
-    <link href="css/style.css?newZipMeter" rel="stylesheet">
+    <link href="css/style.css?v=lms" rel="stylesheet">
     <script src="js/jquery.min.js"></script>
 </head>
 <body>
-    <div class="menuBar" id="menuBarDiv">
-        <a id="back"><div class="icon rippleButton">
-            <i class="fas fa-arrow-left"></i>
-        </div></a>
-        <div class="text">
-            <div class="title" id="titleDiv"></div>
-            <div class="semiTitle" id="semiTitleDiv"></div>
-        </div>
-        <div class="icon rippleButton" id="openToolMenu">
-            <i class="fas fa-ellipsis-v"></i>
-        </div>
-    </div>
-    <div class="content">
-        <div class="contentBox" id="courseInfoBox">
-            <div class="courseInfoBox">
-                <div class="title" id="courseTitle"></div>
-                <div class="semiTitle" id="courseCode"></div>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="app-sidebar" id="sidebar">
+            <div class="logo-area">
+                <i class="fas fa-layer-group"></i> UIU QB
             </div>
-        </div>
-        <div class="contentBox">
-            <div class="mainTitle" id="mainTitle">Questions</div>
-                <div class="questionBoxContainer" id="questionBoxContainer">
+            <nav class="sidebar-menu">
+                <a href="index.html" class="menu-item"><i class="fas fa-home"></i> Home</a>
+                <a href="courses.html" class="menu-item active"><i class="fas fa-book"></i> Courses</a>
+                <a href="mycourses.html" class="menu-item"><i class="fas fa-bookmark"></i> Bookmarks</a>
+            </nav>
+        </aside>
 
+        <!-- Main Workspace -->
+        <main class="app-main">
+            <!-- Topbar -->
+            <header class="app-topbar">
+                <div class="topbar-left">
+                    <button class="menu-toggle" id="openMenu"><i class="fas fa-bars"></i></button>
+                    <div class="mobile-logo"><i class="fas fa-layer-group"></i> UIU QB</div>
+                    <button class="btn-see-all" id="back" style="background: var(--surface); border: 1px solid var(--border); margin-left: 12px;"><i class="fas fa-arrow-left"></i> Back</button>
                 </div>
-        </div>
-        <div class="trimesterButton rippleButton" onclick="GenerateZIP()">
-            <div class="icon">
-                <i class="fas fa-file-archive"></i>
+                <div class="topbar-right"></div>
+            </header>
+
+            <!-- Scrollable Content -->
+            <div class="app-content">
+                <div class="course-header-card" id="menuBarDiv" style="background: var(--surface-alt);">
+                    <div>
+                        <div class="title" id="courseTitle" style="font-family: var(--font-serif); font-size: 2.5rem; margin-bottom: 8px; font-weight: 500;">Loading...</div>
+                        <div class="semiTitle" id="courseCode" style="color: rgba(255,255,255,0.8); font-size: 1.1rem; font-family: var(--font-sans);">Loading...</div>
+                    </div>
+                    <div class="btn-glass" id="getZip" onclick="GenerateZIP()">
+                        <i class="fas fa-file-archive"></i> Download ZIP
+                    </div>
+                </div>
+
+                <div class="questionBoxContainer" id="questionBoxContainer">
+                    <!-- JS Injected questions -->
+                </div>
             </div>
-            <div class="text">
-                Generate ZIP File
-            </div>
-        </div>
+        </main>
     </div>
-    <div class="toolMenu" id="toolMenu">
-        <div class="tools" onclick="GenerateZIP()">
-            <div class="tool rippleButtonBlack">
-                <div class="icon"><i class="fas fa-file-archive"></i></div>
-                <div class="name">Generate ZIP File</div>
-            </div>
-        </div>
-    </div>
+
+    <!-- Modals -->
     <div class="dialogBoxBackground" id="zipBoxBackground">
         <div class="dialogBox">
-            <div class="title">Generating ZIP</div>
-            <div class="detail">
-                Please Wait...
-            </div>
-            <div class="meter">
-                <div class="complete" id="zipComplete"></div>
+            <div class="title">Download Course ZIP</div>
+            <div class="detail" id="zipLink">Generating link...</div>
+            <div class="buttonContainer">
+                <div class="button secondary" id="closeZipBox">Close</div>
             </div>
         </div>
     </div>
-    <div id="snackbar"></div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
-    <script src="js/questions.js?version2"></script>
+    
+    <!-- Mobile Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarMenuBackground"></div>
+
+    <script src="js/questions.js?v=lms"></script>
 </body>
 </html>

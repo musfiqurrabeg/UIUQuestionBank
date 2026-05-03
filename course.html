@@ -2,69 +2,76 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>UIU Question Bank</title>
+    <title>Course - UIU Question Bank</title>
     <link href="css/all.css" rel="stylesheet">
-    <link href="css/style.css?solution" rel="stylesheet">
+    <link href="css/style.css?v=lms" rel="stylesheet">
     <script src="js/jquery.min.js"></script>
 </head>
 <body>
-    <div class="menuBar" id="menuBarDiv">
-        <a id="back"><div class="icon rippleButton">
-            <i class="fas fa-arrow-left"></i>
-        </div></a>
-        <div class="text">
-            <div class="title" id="titleDiv"></div>
-            <div class="semiTitle" id="semiTitleDiv"></div>
-        </div>
-    </div>
-    <div class="content">
-        <div class="contentBox" id="courseInfoBox">
-            <div class="courseInfoBox">
-                <div class="title" id="courseTitle"></div>
-                <div class="semiTitle" id="courseCode"></div>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="app-sidebar" id="sidebar">
+            <div class="logo-area">
+                <i class="fas fa-layer-group"></i> UIU QB
             </div>
-        </div>
-        <div class="contentBox examTypeBoxContainer" id="solveContainer">
-            <a id="mid">
-                <div class="examTypeBox rippleButtonBlack">
-                    <div class="icon" id="iconOne"><i class="fas fa-poll-h"></i></div>
-                    <div class="text">
-                        <div class="title">Mid-Term</div>
-                        <div class="semiTitle">Questions</div>
+            <nav class="sidebar-menu">
+                <a href="index.html" class="menu-item"><i class="fas fa-home"></i> Home</a>
+                <a href="courses.html" class="menu-item active"><i class="fas fa-book"></i> Courses</a>
+                <a href="mycourses.html" class="menu-item"><i class="fas fa-bookmark"></i> Bookmarks</a>
+            </nav>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="app-main">
+            <!-- Topbar -->
+            <header class="app-topbar">
+                <div class="topbar-left">
+                    <button class="menu-toggle" id="openMenu"><i class="fas fa-bars"></i></button>
+                    <div class="mobile-logo"><i class="fas fa-layer-group"></i> UIU QB</div>
+                    <button class="btn-see-all" id="back" style="background: var(--surface); border: 1px solid var(--border); margin-left: 12px;"><i class="fas fa-arrow-left"></i> Back</button>
+                </div>
+                <div class="topbar-right"></div>
+            </header>
+
+            <!-- Scrollable Content -->
+            <div class="app-content">
+                <div class="course-header-card" id="menuBarDiv" style="background: var(--surface-alt);">
+                    <div>
+                        <div class="title" id="courseTitle" style="font-family: var(--font-serif); font-size: 2.5rem; margin-bottom: 8px; font-weight: 500;">Loading...</div>
+                        <div class="semiTitle" id="courseCode" style="color: rgba(255,255,255,0.8); font-size: 1.1rem; font-family: var(--font-sans);">Loading...</div>
                     </div>
                 </div>
-            </a><a id="final">
-                <div class="examTypeBox rippleButtonBlack">
-                    <div class="icon" id="iconTwo"><i class="fas fa-poll-h"></i></div>
-                    <div class="text">
+
+                <div class="examTypeBoxContainer" id="examTypeBoxContainer">
+                    <div class="examTypeBox" id="midterm">
+                        <div class="icon"><i class="fas fa-file-alt"></i></div>
+                        <div class="title">Midterm</div>
+                        <div class="semiTitle">Questions & Solutions</div>
+                    </div>
+                    <div class="examTypeBox" id="final">
+                        <div class="icon"><i class="fas fa-file-alt"></i></div>
                         <div class="title">Final</div>
-                        <div class="semiTitle">Questions</div>
+                        <div class="semiTitle">Questions & Solutions</div>
+                    </div>
+                    <div class="examTypeBox" id="ct">
+                        <div class="icon"><i class="fas fa-file-alt"></i></div>
+                        <div class="title">Class Test</div>
+                        <div class="semiTitle">Questions & Solutions</div>
+                    </div>
+                    <div class="examTypeBox" id="others">
+                        <div class="icon"><i class="fas fa-folder-open"></i></div>
+                        <div class="title">Others</div>
+                        <div class="semiTitle">Assignments, Slides</div>
                     </div>
                 </div>
-            </a><a id="midSolve">
-                <div class="examTypeBox rippleButtonBlack">
-                    <div class="disable" id="disableMid"></div>
-                    <div class="icon" id="iconThree"><i class="fas fa-poll-h"></i></div>
-                    <div class="text">
-                        <div class="title">Mid-Term</div>
-                        <div class="semiTitle">Solutions</div>
-                    </div>
-                </div>
-            </a><a id="finalSolve">
-                <div class="examTypeBox rippleButtonBlack">
-                    <div class="disable" id="disableFinal"></div>
-                    <div class="icon" id="iconFour"><i class="fas fa-poll-h"></i></div>
-                    <div class="text">
-                        <div class="title">Final</div>
-                        <div class="semiTitle">Solutions</div>
-                    </div>
-                </div>
-            </a>
-        </div>
+            </div>
+        </main>
     </div>
-    <div id="snackbar"></div>
-    <script src="js/course.js?version2"></script>
+    
+    <!-- Mobile Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarMenuBackground"></div>
+
+    <script src="js/course.js?v=lms"></script>
 </body>
 </html>
