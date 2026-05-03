@@ -1,0 +1,11 @@
+# Exclude prompt context and internal instructions
+Skills/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Archives and temporary files
+archive/
+tmp/
+*.log
